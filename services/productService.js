@@ -95,7 +95,7 @@ class productServices{
             const skip = limit * page - limit 
             let responce
             let count
-            console.log(typeId,'yyyyyyyyyyyyyyyy');
+          
             responce =await Product.find({name: { $regex: searchReg, $options: "i" },type:typeId, price:{$gt: minPrice, $lt: maxPrice+1}}).sort({[sort]:sortNumber}).populate(['type','brand','ratings','information']);
           
             if (sort =='rating') {
@@ -105,7 +105,7 @@ class productServices{
                 responce.sort((a,b)=>a.ratings.reduce((sum,val)=>val.rate+sum,0) - b.ratings.reduce((sum,val)=>val.rate+sum,0))
             }
             responce = [...responce.filter(e=>{
-                console.log((e.brand._id).valueOf());
+               
                 return checkedBrands.length == 0 ? e: checkedBrands.includes((e.brand._id).valueOf())
 
             })]
@@ -115,11 +115,14 @@ class productServices{
                   for (const it of e.information) {
                 
                      if (typeInformation[it.name] == 'radio') {
-                        if (it.description !== 'неважно') {
-                            if (!Object.entries(informations).find(f=>f[0] === it.name && f[1] === it.description ) ) {
+                        console.log(it.description,informations,'OOOOOOOOOOOOOOOOOOOOOOOOOOO');
+                        if (Object.entries(informations)) {
+                            
+                        }
+                            if (!Object.entries(informations).find(f=>f[0] === it.name  && f[1] === it.description ) && !Object.entries(informations).find(f=>f[1] === 'неважно')) {
                                 bool = false
                             }
-                        }
+                        
                         
                      }
                      if (typeInformation[it.name] == 'check') {
