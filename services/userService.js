@@ -99,15 +99,17 @@ class userServices{
 
       async refresh(refreshToken){
         try {
-            console.log(!refreshToken,'iiiooo');
+          
         if (!refreshToken) {
           return ApiError.unauthorized()
         }
         const response =await tokenServices.validateRefreshToken(refreshToken)
         const tokenFromDataBase =await tokenServices.getOne(refreshToken)
- 
+ console.log(response,'88888',tokenFromDataBase,'888');
         if (!response || !tokenFromDataBase) {
+          console.log('6776777');
             return ApiError.unauthorized()
+       
         }
     console.log('yy');
         const user =await  User.findOne({_id:response.id})

@@ -14,7 +14,7 @@ class compareServices{
     
       async getOne(id){
         try {
-        const response =await Compare.findById(id).populate({path:'compareItems',populate:{path:"product",populate:[{path:"type"},{path:"brand"}]}})
+        const response =await Compare.findById(id).populate({path:'compareItems',populate:{path:"product",populate:[{path:"type"},{path:"brand"},{path:"information"}]}})
         if (!response) {
             return ApiError.unauthorized()
         }

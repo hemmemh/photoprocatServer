@@ -79,7 +79,7 @@ class productServices{
     async getAll(query){
         try {
             let {page,limit,typeId,brandId,search,minPrice,maxPrice,sort,sortNumber,checkedBrands,informations,typeInformation} = query
-          console.log(checkedBrands);
+       
             page = page || 1
             limit = limit || 4
             search = search || ''
@@ -116,9 +116,7 @@ class productServices{
                 
                      if (typeInformation[it.name] == 'radio') {
                         console.log(it.description,informations,'OOOOOOOOOOOOOOOOOOOOOOOOOOO');
-                        if (Object.entries(informations)) {
-                            
-                        }
+                      
                             if (!Object.entries(informations).find(f=>f[0] === it.name  && f[1] === it.description ) && !Object.entries(informations).find(f=>f[1] === 'неважно')) {
                                 bool = false
                             }

@@ -22,7 +22,7 @@ class compareItemServices{
       }
       async deletecompareItem(id,compareId){
         try {
-            const compare =await Compare.findById(compareId).populate({path:"compareItems",populate:{path:'product'}})
+            const compare =await Compare.findById(compareId).populate({path:'compareItems',populate:{path:"product",populate:[{path:"type"},{path:"brand"},{path:"information"}]}})
             const index = compare.compareItems.find((el)=>el._id === id);
             compare.compareItems = compare.compareItems.filter(el=>el._id !== index)
             await CompareItem.findByIdAndRemove(id)
@@ -35,7 +35,7 @@ class compareItemServices{
     async removeByType(type,compareId){
         try {
             let arr = []
-            const compare =await Compare.findById(compareId).populate({path:'compareItems',populate:{path:"product",populate:[{path:"type"},{path:"brand"}]}})
+            const compare =await Compare.findById(compareId).populate({path:'compareItems',populate:{path:"product",populate:[{path:"type"},{path:"brand"},{path:"information"}]}})
             for (const e of compare.compareItems) {
             
                 if(e.product.type.name  !== type){
