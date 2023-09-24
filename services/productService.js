@@ -30,7 +30,7 @@ class productServices{
               image.forEach(e=>{
                 const image = uuid.v4() + '.jpg'
                 imagesPath.push(image)
-                const filePath = path.resolve(__dirname,'..','static',`${name}`)
+                const filePath = path.resolve(__dirname,'..','files',`${name}`)
                 if (!fs.existsSync(filePath)) {
                   fs.mkdirSync(filePath,{recursive:true})
                 } 

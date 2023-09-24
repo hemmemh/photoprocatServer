@@ -9,6 +9,7 @@ const router = require('./routs/index')
 const fileUpload = require('express-fileupload')
 const path = require('path');
 const ApiErrorMiddleware = require('./middleWares/ApiErrorMiddleware');
+const filepathMiddleWare = require('./middleWares/filepathMiddleWare');
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors(
@@ -17,6 +18,8 @@ app.use(cors(
 ))
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(fileUpload({}))
+app.use(filepathMiddleWare(path.resolve(__dirname,'files')))
+
 app.use('/api',router)
 app.use(ApiErrorMiddleware)
 const start = async ()  =>{
