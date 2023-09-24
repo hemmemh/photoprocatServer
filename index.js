@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors(
     {credentials:true,
-    origin:'http://root@31.129.107.38:8080'}
+    origin:'http://31.129.107.38:8080'}
 ))
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(fileUpload({}))
