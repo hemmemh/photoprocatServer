@@ -30,7 +30,7 @@ class productServices{
               image.forEach(e=>{
                 const image = uuid.v4() + '.jpg'
                 imagesPath.push(image)
-                const filePath = path.resolve(__dirname,'..','files',`${name}`)
+                const filePath = path.resolve(__dirname,'..','static',`${name}`)
                 if (!fs.existsSync(filePath)) {
                   fs.mkdirSync(filePath,{recursive:true})
                 } 
@@ -79,7 +79,7 @@ class productServices{
     async getAll(query){
         try {
             let {page,limit,typeId,brandId,search,minPrice,maxPrice,sort,sortNumber,checkedBrands,informations,typeInformation} = query
-       
+         
             page = page || 1
             limit = limit || 4
             search = search || ''
@@ -95,7 +95,7 @@ class productServices{
             const skip = limit * page - limit 
             let responce
             let count
-          
+            console.log(page,skip,limit,'yyyyu');
             responce =await Product.find({name: { $regex: searchReg, $options: "i" },type:typeId, price:{$gt: minPrice, $lt: maxPrice+1}}).sort({[sort]:sortNumber}).populate(['type','brand','ratings','information']);
           
             if (sort =='rating') {
@@ -115,7 +115,6 @@ class productServices{
                   for (const it of e.information) {
                 
                      if (typeInformation[it.name] == 'radio') {
-                        console.log(it.description,informations,'OOOOOOOOOOOOOOOOOOOOOOOOOOO');
                       
                             if (!Object.entries(informations).find(f=>f[0] === it.name  && f[1] === it.description ) && !Object.entries(informations).find(f=>f[1] === 'неважно')) {
                                 bool = false
@@ -142,9 +141,9 @@ class productServices{
                  })]
             }
             count = responce.length
-            console.log(skip,limit * page,responce);
             const responceAll = responce
-            responce = responce.slice(skip,limit * page)
+            responce = responceAll.slice(skip,limit * page)
+            console.log(responce);
             return ({
                 responce,
                 responceAll,

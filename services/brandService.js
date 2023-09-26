@@ -7,7 +7,7 @@ class brandServices{
         try {
            
           const imagePath = uuid.v4() + '.jpg'
-          const filePath = path.resolve(__dirname,'..','files',`brands`)
+          const filePath = path.resolve(__dirname,'..','static',`brands`)
           if (!fs.existsSync(filePath)) {
             fs.mkdirSync(filePath,{recursive:true})
           }     
