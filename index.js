@@ -14,7 +14,8 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors(
     {credentials:true,
-    origin:'https://photoprocat-client.vercel.app'}
+    origin:'http://localhost:3000',
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",}
 ))
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(fileUpload({}))
