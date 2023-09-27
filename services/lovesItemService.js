@@ -9,13 +9,17 @@ class lovesItemServices{
             if (!lovesId || !product) {
                 return ApiError.BadRequest('неавторизован')
             }
-            const loves =await Loves.findById(lovesId)
-            const response = new LovesItem({loves:lovesId,product})
-            await response.save()
+         
+            const loves =await Loves.findById(lovesId).populate('lovesItems')
            
+            if(!loves.lovesItems.find(e=> e.product._id.toString() == product )){
+                const response = new LovesItem({loves:lovesId,product})
+            await response.save()
             loves.lovesItems.push(response._id)
             await loves.save()
             return response
+            }
+            
         } catch (e) {
             console.log(e);
         }
@@ -25,9 +29,9 @@ class lovesItemServices{
       
         try {
             const loves =await Loves.findById(lovesId).populate({path:"lovesItems",populate:{path:'product'}})
-            const index = loves.lovesItems.find((el)=>el._id === id);
-            loves.lovesItems = loves.lovesItems.filter(el=>el._id !== index)
-            await LovesItem.findByIdAndRemove(id)
+
+            loves.lovesItems = loves.lovesItems.filter(el=>el.product._id.toString() !== id)
+            await LovesItem.findOneAndRemove({product:id})
             await loves.save()
             return loves
         } catch (e) {

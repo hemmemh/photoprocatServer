@@ -6,16 +6,19 @@ const ApiError = require("../Errors/ApiError")
 class compareItemServices{
     async createCompareItem(compareId,product){
         try {
-            const compare =await Compare.findById(compareId)
+            const compare =await Compare.findById(compareId).populate('compareItems')
             if (!compare) {
                 return ApiError.unauthorized()
             }
-            const response = new CompareItem({compare:compareId,product})
-            await response.save()
-
-            compare.compareItems.push(response._id)
-            await compare.save()
-            return response
+            if(!compare.compareItems.find(e=> e.product.toString()== product )){
+                const response = new CompareItem({compare:compareId,product})
+                await response.save()
+    
+                compare.compareItems.push(response._id)
+                await compare.save()
+                return response
+            }
+         
         } catch (e) {
             console.log(e);
         }
@@ -23,9 +26,9 @@ class compareItemServices{
       async deletecompareItem(id,compareId){
         try {
             const compare =await Compare.findById(compareId).populate({path:'compareItems',populate:{path:"product",populate:[{path:"type"},{path:"brand"},{path:"information"}]}})
-            const index = compare.compareItems.find((el)=>el._id === id);
-            compare.compareItems = compare.compareItems.filter(el=>el._id !== index)
-            await CompareItem.findByIdAndRemove(id)
+          
+            compare.compareItems = compare.compareItems.filter(el=>el.product._id.toString() !== id)
+            await CompareItem.findOneAndRemove({product:id})
             await compare.save()
             return compare
         } catch (e) {
