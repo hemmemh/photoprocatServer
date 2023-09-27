@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors(
     {credentials:true,
-    origin:'http://31.129.107.38:8080',
+    origin:'31.129.107.38:5000',
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",}
 ))
 app.use(express.static(path.resolve(__dirname, 'static')))

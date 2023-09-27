@@ -89,14 +89,15 @@ class productServices{
             sortNumber = sortNumber || 1 
             minPrice =Number(minPrice)  || 0 
             maxPrice =Number(maxPrice)  || 1000000000
+            console.log(minPrice,maxPrice);
             informations = informations || {}
             typeInformation = typeInformation || null
             typeId = typeId || ''
             const skip = limit * page - limit 
             let responce
             let count
-            console.log(page,skip,limit,'yyyyu');
-            responce =await Product.find({name: { $regex: searchReg, $options: "i" },type:typeId, price:{$gt: minPrice, $lt: maxPrice+1}}).sort({[sort]:sortNumber}).populate(['type','brand','ratings','information']);
+          
+            responce =await Product.find({name: { $regex: searchReg, $options: "i" },type:typeId, price:{$gt: minPrice-1, $lt: maxPrice+1}}).sort({[sort]:sortNumber}).populate(['type','brand','ratings','information']);
           
             if (sort =='rating') {
                 sortNumber == -1 ?
@@ -143,7 +144,7 @@ class productServices{
             count = responce.length
             const responceAll = responce
             responce = responceAll.slice(skip,limit * page)
-            console.log(responce);
+         
             return ({
                 responce,
                 responceAll,
