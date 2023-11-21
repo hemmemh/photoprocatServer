@@ -22,12 +22,14 @@ async delete(req,res){
     return res.json(response)
 }
 async getOne(req,res,next){
-    const {id} = req.body
-    const response =await lovesServices.getOne(id)
-    if (response instanceof ApiError) {
-        return next(response)
+    try {
+        const {id} = req.body
+        const response =await lovesServices.getOne(id)
+        return res.json(response)
+    } catch (error) {
+        next(error)
     }
-    return res.json(response)
+
 }
 }
 module.exports = new lovesControllers()

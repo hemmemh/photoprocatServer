@@ -14,16 +14,12 @@ class lovesServices{
       }
     
       async getOne(id){
-        try {
+      
         const response =await Loves.findById(id).populate({path:'lovesItems',populate:{path:'product',populate:['type',"brand","ratings"]}})
         if (!response) {
-            return ApiError.unauthorized()
+            throw ApiError.unauthorized()
         }
         return response
-        } catch (error) {
-            console.log(error);
-        }
-        
     }
 
    

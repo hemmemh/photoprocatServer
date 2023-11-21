@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors(
     {credentials:true,
-    origin:'http://localhost:3000',
+    origin:'http://31.129.107.38:8080',
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",}
 ))
 app.use(express.static(path.resolve(__dirname, 'static')))
@@ -25,7 +25,7 @@ app.use('/api',router)
 app.use(ApiErrorMiddleware)
 const start = async ()  =>{
     try {
-        await mongoose.connect('mongodb+srv://hem:hem@cluster0.og4nqky.mongodb.net/?retryWrites=true&w=majority')
+        await mongoose.connect('mongodb+srv://hem:hem@cluster0.og4nqky.mongodb.net/')
         app.listen(PORT,()=>console.log(`подключен к порту ${PORT}`))
     } catch (error) {
         console.log(error);

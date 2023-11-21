@@ -25,16 +25,12 @@ class basketServices{
         }
       }
       async getOne(id){
-        try {
+
         const response =await Basket.findOne({user:id}).populate({path:'basketItems',populate:{path:'product',populate:{path:'brand'}}})
         if (!response) {
-            return ApiError.unauthorized()
+            throw ApiError.unauthorized()
         }
-        return response
-        } catch (error) {
-            console.log(error);
-        }
-        
+        return response   
     }
 
     

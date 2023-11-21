@@ -37,12 +37,15 @@ async removeAll(req,res){
 }
 
 async getOne(req,res,next){
-    const {id} = req.body
-    const response =await basketServices.getOne(id)
-    if (response instanceof ApiError) {
+    try {
+        const {id} = req.body
+        const response =await basketServices.getOne(id)
+      
+        return res.json(response)
+    } catch (error) {
         return next(response)
     }
-    return res.json(response)
+ 
 }
 }
 module.exports = new basketControllers()
