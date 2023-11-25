@@ -6,14 +6,9 @@ class basketItemServices{
     async createbasketItem(basketId,product,count){
         try {
             const basket =await Basket.findOne({_id:basketId}).populate('basketItems')
-            if (!basket) {
-                return ApiError.unauthorized()
-            }
-           
+
+            let response = null
           
-          let response = null
-          
-            console.log(basket.basketItems,product,'adwadade2');
             if(!basket.basketItems.find(e=> e.product.toString()== product )){
                 const response = new BasketItem({basket:basketId,product,count})
                 await response.save()
@@ -23,18 +18,19 @@ class basketItemServices{
             
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.unauthorized()
         }
     }
+
+
     async changebasketItem(id,count){
         try {
-           console.log(id,count,']]]');
             const basketItem =await BasketItem.findById(id)
             basketItem.count = count
             await basketItem.save()
             return basketItem
         } catch (e) {
-            console.log(e);
+            throw ApiError.unauthorized()
         }
     }
     async deletebasketItem(id,basketId){
@@ -46,7 +42,7 @@ class basketItemServices{
             await basket.save()
             return basket
         } catch (e) {
-            console.log(e);
+            throw ApiError.unauthorized()
         }
     }
 }

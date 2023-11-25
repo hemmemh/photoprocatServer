@@ -4,12 +4,14 @@ const ratingServices = require("../services/ratingService")
 
 class ratingControllers{
     async create(req,res,next){
-        const {user,rate,product,name,sername,text} = req.body
-        const response =await ratingServices.createRating(user,rate,product,name,sername,text)
-        if (response instanceof ApiError) {
-            return next(response)
+        try {
+            const {user,rate,product,name,sername,text} = req.body
+            const response =await ratingServices.createRating(user,rate,product,name,sername,text)
+            return res.json(response)
+        } catch (error) {
+            next(error)
         }
-        return res.json(response)
+
 }
 
 }

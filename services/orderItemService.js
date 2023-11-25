@@ -2,6 +2,7 @@ const OrdersItem = require("../models/OrdersItem")
 const Orders = require("../models/Orders")
 const orderItemProductService = require("./orderItemProductService")
 const OrdersItemProduct = require("../models/OrdersItemProduct")
+const ApiError = require("../Errors/ApiError")
 
 class orderItemServices{
     async createorderItem(ordersId,price){
@@ -15,7 +16,7 @@ class orderItemServices{
             await orders.save()
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.BadRequestData()
         }
       }
     
@@ -24,7 +25,7 @@ class orderItemServices{
         const response =await Orders.findById(id).populate({path:'ordersItems',populate:{path:'ordersItemProduct',populate:{path:'product',populate:{path:'brand'}}}})
         return response
         } catch (error) {
-            console.log(error);
+            throw ApiError.unauthorized()
         }
         
     }
@@ -40,7 +41,7 @@ class orderItemServices{
             await order.save()
             return order
         } catch (e) {
-            console.log(e);
+            throw ApiError.BadRequestData()
         }
       }
    

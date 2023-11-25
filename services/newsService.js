@@ -4,6 +4,7 @@ const Comment  = require("../models/Comment")
 const uuid = require('uuid')
 const path = require('path')
 const fs = require('fs')
+const ApiError = require("../Errors/ApiError")
 class newsServices{
     async createNews(title,text,image){
         try {
@@ -18,7 +19,7 @@ class newsServices{
                 await response.save()
                 return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.BadRequest('недостаточно данных')
         }
     }
     async addComment(name,sername,text,news){
@@ -31,7 +32,7 @@ class newsServices{
                 await newsRes.save()
                 return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.BadRequestData()
         }
     }
 
@@ -41,7 +42,7 @@ class newsServices{
                 const response = News.find({}).populate('comments')
                 return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.internal('')
         }
     }
     

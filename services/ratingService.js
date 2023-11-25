@@ -25,7 +25,7 @@ class ratingServices{
             await productRes.save()
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.BadRequestData()
         }
     }
    

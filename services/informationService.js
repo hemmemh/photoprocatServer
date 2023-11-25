@@ -9,7 +9,7 @@ class informationServices{
             await response.save()
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.unauthorized()
         }
       }
       async getAll(){
@@ -17,7 +17,7 @@ class informationServices{
             const response =await Type.find({})
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.unauthorized()
         }
       }
       async getOne(idType){
@@ -25,7 +25,7 @@ class informationServices{
         const response =await Type.findById(idType)
         return response
         } catch (error) {
-            console.log(error);
+            throw ApiError.unauthorized()
         }
         
     }

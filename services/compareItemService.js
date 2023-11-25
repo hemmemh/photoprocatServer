@@ -20,7 +20,7 @@ class compareItemServices{
             }
          
         } catch (e) {
-            console.log(e);
+            throw ApiError.BadRequest('недостаточно данных')
         }
       }
       async deletecompareItem(id,compareId){
@@ -32,7 +32,7 @@ class compareItemServices{
             await compare.save()
             return compare
         } catch (e) {
-            console.log(e);
+            throw ApiError.BadRequest('недостаточно данных')
         }
     }
     async removeByType(type,compareId){
@@ -51,7 +51,7 @@ class compareItemServices{
             await compare.save()
             return compare
         } catch (e) {
-            console.log(e);
+            throw ApiError.BadRequest('недостаточно данных')
         }
     }
       async getOne(id){
@@ -59,7 +59,7 @@ class compareItemServices{
         const response =await Basket.findById(id)
         return response
         } catch (error) {
-            console.log(error);
+            throw ApiError.BadRequest('недостаточно данных')
         }
         
     }

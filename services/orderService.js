@@ -1,3 +1,4 @@
+const ApiError = require("../Errors/ApiError")
 const Order  = require("../models/Orders")
 const Product  = require("../models/Product")
 
@@ -8,7 +9,7 @@ class orderServices{
             await response.save()
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.forbidden()
         }
       }
     
@@ -17,7 +18,7 @@ class orderServices{
         const response =await Basket.findById(id)
         return response
         } catch (error) {
-            console.log(error);
+            throw ApiError.unauthorized()
         }
         
     }
@@ -32,7 +33,7 @@ class orderServices{
          
           return basket
       } catch (e) {
-          console.log(e);
+        throw ApiError.BadRequestData()
       }
     }
 }

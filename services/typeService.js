@@ -2,6 +2,7 @@ const Type  = require("../models/Type")
 const uuid = require('uuid')
 const path = require('path')
 const fs = require('fs')
+const ApiError = require("../Errors/ApiError")
 class typeServices{
 
  
@@ -12,7 +13,7 @@ class typeServices{
             await response.save()
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.BadRequestData()
         }
       }
       async getAll(){
@@ -20,7 +21,7 @@ class typeServices{
             const response =await Type.find({})
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.internal('')
         }
       }
       async getOne(idType){
@@ -28,7 +29,7 @@ class typeServices{
         const response =await Type.findById(idType)
         return response
         } catch (error) {
-            console.log(error);
+            throw ApiError.internal('')
         }
         
     }

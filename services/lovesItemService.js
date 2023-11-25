@@ -5,13 +5,7 @@ const ApiError = require("../Errors/ApiError");
 class lovesItemServices{
     async createlovesItem(lovesId,product){
         try {
-            console.log(lovesId,product,'[[[[[]]]]]');
-            if (!lovesId || !product) {
-                return ApiError.BadRequest('неавторизован')
-            }
-         
             const loves =await Loves.findById(lovesId).populate('lovesItems')
-           
             if(!loves.lovesItems.find(e=> e.product._id.toString() == product )){
                 const response = new LovesItem({loves:lovesId,product})
             await response.save()
@@ -21,7 +15,7 @@ class lovesItemServices{
             }
             
         } catch (e) {
-            console.log(e);
+            throw ApiError.unauthorized()
         }
       }
     
@@ -35,7 +29,7 @@ class lovesItemServices{
             await loves.save()
             return loves
         } catch (e) {
-            console.log(e);
+            throw ApiError.unauthorized()
         }
     }
 

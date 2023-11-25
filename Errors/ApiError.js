@@ -10,6 +10,9 @@ class ApiError extends Error{
     static BadRequest(message,error=[]){
         return new ApiError(404,message,error)
     }
+    static BadRequestData(error=[]){
+        return new ApiError(404,'недостаточно дынных',error)
+    }
     static internal(message,error=[]){
         return new ApiError(500,message,error)
     }  

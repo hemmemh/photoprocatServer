@@ -46,7 +46,7 @@ class userServices{
             const tokens =await tokenServices.generateUpdateToken(dto)
             return tokens
         } catch (e) {
-            console.log(e);
+          throw ApiError.BadRequestData()
         }
       }
       async login(mail,password){
@@ -65,7 +65,7 @@ class userServices{
       
             return tokens
         } catch (error) {
-            console.log(error);
+          throw ApiError.BadRequestData()
         }
     }
       async getOne(id){
@@ -74,7 +74,7 @@ class userServices{
         const response =await User.findOne({_id:id}).populate('basket')
         return response
         } catch (error) {
-            console.log(error);
+          throw ApiError.unauthorized()
         }
         
     }

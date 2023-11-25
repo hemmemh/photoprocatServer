@@ -29,7 +29,7 @@ class tokenServices{
     
             }
         } catch (e) {
-            console.log(e);
+            throw ApiError.BadRequestData()
         }
       }
     
@@ -46,7 +46,7 @@ async getOne(refreshToken){
         const token = Token.findOne({refreshToken})
         return token
     } catch (error) {
-        
+        throw ApiError.BadRequestData()
     }
 }
  generateToken(payload){

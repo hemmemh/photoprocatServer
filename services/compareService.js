@@ -8,7 +8,7 @@ class compareServices{
             await response.save()
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.internal('')
         }
       }
     
@@ -20,7 +20,7 @@ class compareServices{
         }
         return response
         } catch (error) {
-            console.log(error);
+            throw ApiError.unauthorized()
         }
         
     }

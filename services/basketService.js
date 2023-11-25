@@ -10,7 +10,7 @@ class basketServices{
             await response.save()
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.internal('ошибка при создании пользователя')
         }
       }
       async removeAll(id){
@@ -21,16 +21,18 @@ class basketServices{
             await BasketItem.deleteMany({basket:response._id})
             return response
         } catch (e) {
-            console.log(e);
+          console.log(e);
+            throw ApiError.BadRequest('не указан id')
         }
       }
       async getOne(id){
-
-        const response =await Basket.findOne({user:id}).populate({path:'basketItems',populate:{path:'product',populate:{path:'brand'}}})
-        if (!response) {
-            throw ApiError.unauthorized()
-        }
-        return response   
+  try {
+    const response =await Basket.findOne({user:id}).populate({path:'basketItems',populate:{path:'product',populate:{path:'brand'}}})
+    return response   
+  } catch (error) {
+    throw ApiError.unauthorized()
+  }
+       
     }
 
     

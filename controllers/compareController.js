@@ -3,37 +3,56 @@ const compareItemServices = require("../services/compareItemService")
 const ApiError = require("../Errors/ApiError")
 
 class compareControllers{
-    async create(req,res){
-        const {id} = req.body
-        const response =await compareServices.createCompare(id)
-        return res.json(response)
+    async create(req,res,next){
+        try {
+            const {id} = req.body
+            const response =await compareServices.createCompare(id)
+            return res.json(response) 
+        } catch (error) {
+            next(error)
+        }
+
 }
 async add(req,res,next){
-    const {compareId,product} = req.body
-    const response =await compareItemServices.createCompareItem(compareId,product)
-    if (response instanceof ApiError) {
-        return next(response)
+    try {
+        const {compareId,product} = req.body
+        const response =await compareItemServices.createCompareItem(compareId,product)
+        return res.json(response)
+    } catch (error) {
+        next(error)
     }
-    return res.json(response)
+
 }
-async delete(req,res){
-    const {id,compareId} = req.body
-    const response =await compareItemServices.deletecompareItem(id,compareId)
-    return res.json(response)
+async delete(req,res,next){
+    try {
+        const {id,compareId} = req.body
+        const response =await compareItemServices.deletecompareItem(id,compareId)
+        return res.json(response)
+    } catch (error) {
+        next(error)
+    }
+
 }
-async removeByType(req,res){
-    const {type,compareId} = req.body
-    const response =await compareItemServices.removeByType(type,compareId)
-    return res.json(response)
+async removeByType(req,res,next){
+    try {
+        const {type,compareId} = req.body
+        const response =await compareItemServices.removeByType(type,compareId)
+        return res.json(response)
+    } catch (error) {
+        next(error)
+    }
+
 }
 
 async getOne(req,res,next){
-    const {id} = req.body
-    const response =await compareServices.getOne(id)
-    if (response instanceof ApiError) {
-        return next(response)
+    try {
+        const {id} = req.body
+        const response =await compareServices.getOne(id)
+        return res.json(response)
+    } catch (error) {
+        next(error)
     }
-    return res.json(response)
+
 }
 }
 module.exports = new compareControllers()

@@ -9,17 +9,20 @@ class lovesServices{
             await response.save()
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.internal()
         }
       }
     
       async getOne(id){
-      
-        const response =await Loves.findById(id).populate({path:'lovesItems',populate:{path:'product',populate:['type',"brand","ratings"]}})
-        if (!response) {
-            throw ApiError.unauthorized()
-        }
-        return response
+      try {
+        const loves = await Loves.findById(id).populate({path:'lovesItems',populate:{path:'product',populate:['type',"brand","ratings"]}})
+        return loves
+      } catch (error) {
+        throw ApiError.unauthorized()
+      }
+       
+
+        
     }
 
    

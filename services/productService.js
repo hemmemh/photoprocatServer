@@ -51,7 +51,7 @@ class productServices{
             await response.save()
             return response
         } catch (e) {
-            console.log(e);
+            throw ApiError.BadRequestData()
         }
     }
 
@@ -60,7 +60,7 @@ class productServices{
         const response =await Product.findById(id).populate(['type','brand','ratings','information']);
         return response
         } catch (error) {
-            console.log(error);
+            throw ApiError.unauthorized()
         }
         
     }
@@ -72,7 +72,7 @@ class productServices{
         await response.save()
         return response
         } catch (error) {
-            console.log(error);
+            throw ApiError.BadRequestData()
         }
         
     }
@@ -151,7 +151,7 @@ class productServices{
                 count
             })
         } catch (e) {
-            console.log(e);
+            throw ApiError.internal('')
         }
       }
 
@@ -161,7 +161,7 @@ class productServices{
          
         return response
         } catch (error) {
-            console.log(error);
+            throw ApiError.internal('')
         }
         
     }
